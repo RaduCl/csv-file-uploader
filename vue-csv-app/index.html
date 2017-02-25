@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>vue-csv-app</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+     <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+           <div class="navbar-header"><button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/"><i class="fa fa-cube"></i>Big CSV</a></div>
+           <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                 <li><a href="/">Home</a></li>
+                 <li><a href="/api">Upload</a></li>
+                 <li><a href="/status">Status</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right"></ul>
+           </div>
+        </div>
+     </div>
+     <div class="container">
+        <div class="page-header">
+           <h2><i class="fa fa-upload"></i>File Upload</h2>
+        </div>
+        <div class="btn-group btn-group-justified" id="event-emiter"><a class="btn btn-success"><i class="fa fa-book"></i>Emit 'testing' event</a><a class="btn btn-success"><i class="fa fa-laptop"></i>Customize File Upload</a></div>
+        <h3>File Upload Form</h3>
+        <div class="row">
+           <div class="col-sm-12">
+              <p>All files will be uploaded to "/uploads" directory.</p>
+              <div id="app">
+              </div>
+           </div>
+        </div>
+     </div>
+     <footer>
+        <div class="container text-center">
+           <p class="pull-left">© 2017 Radu Clitan. All Rights Reserved</p>
+           <ul class="pull-right list-inline">
+              <li><a href="https://github.com/raducl/csv-file-uploader">GitHub Project</a></li>
+              <li><a href="https://github.com/raducl/csv-file-uploader/issues">Issues</a></li>
+           </ul>
+        </div>
+     </footer>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+     <script src='https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.js'
+"></script>
+     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </body>
+</html>

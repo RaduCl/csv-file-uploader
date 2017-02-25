@@ -18,6 +18,7 @@ const passport = require('passport');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
+const socket = require('socket.io');
 const multer = require('multer');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
@@ -31,7 +32,6 @@ dotenv.load({ path: '.env' });
  * Controllers (route handlers).
  */
 const homeController = require('./controllers/home');
-const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 
@@ -92,20 +92,16 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
-app.use((req, res, next) => {
-  // After successful login, redirect back to the intended page
-  if (!req.user &&
-      req.path !== '/login' &&
-      req.path !== '/signup' &&
-      !req.path.match(/^\/auth/) &&
-      !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
-  } else if (req.user &&
-      req.path == '/account') {
-    req.session.returnTo = req.path;
-  }
-  next();
-});
+
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', "http://"+req.headers.host+':3000');
+
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     next();
+//   }
+// );
+
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
 /**
@@ -121,8 +117,22 @@ app.post('/contact', contactController.postContact);
 app.get('/api', apiController.getApi);
 app.get('/api/scraping', apiController.getScraping);
 app.get('/api/upload', apiController.getFileUpload);
-app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
+// app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
+app.post('/api/upload', function(req, res, next) {
+  var uploader = multer().single('myFile');
+  uploader(req, res, function (uploadedFilesError){
+    if(uploadedFilesError) {
+      console.log('error upload: ', uploadedFilesError);
+      req.flash('error', { msg: uploadedFilesError });
+      res.redirect('/api/upload');
+    }
 
+
+    console.log('file ', req.file);
+    req.flash('success', { msg: 'File was uploaded successfully.' });
+    res.redirect('/api/upload');
+  })
+})
 
 /**
  * Error Handler.
@@ -132,9 +142,26 @@ app.use(errorHandler());
 /**
  * Start Express server.
  */
-app.listen(app.get('port'), () => {
+
+var server = app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
   console.log('  Press CTRL-C to stop\n');
 });
+
+/**
+ * Start socket.io
+ */
+const io = socket(server);
+
+io.on('connection', function(socket){
+  console.log('SOCKET CONNECTED ID: ', socket.id);
+
+  socket.on('test-event', function(data){
+    socket.emit('server-response', {soketID: socket.id})
+  });
+
+  socket.on('disconnect', function(){});
+});
+
 
 module.exports = app;
