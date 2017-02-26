@@ -12,9 +12,9 @@ block content
       | Upload Files
     a.btn.btn-success
       i.fa.fa-book
-      | Emit 'testing' event
+      | Emit 'testing' websocket event
 
-
+  - console.log(files)
   h3 Files already uploaded
   .row
     .col-sm-12
@@ -23,22 +23,26 @@ block content
         thead
           tr
             th #
-            th First Name
-            th Last Name
-            th Username
+            th Upload Date
+            th Upload Duration(s)
+            th File name
+            th Status
+            th Email column
+            th Size (MB)
+            th actions
         tbody
-          tr
-            th(scope='row') 1
-            td Mark
-            td Otto
-            td @mdo
-          tr
-            th(scope='row') 2
-            td Jacob
-            td Thornton
-            td @fat
-          tr
-            th(scope='row') 3
-            td Larry
-            td the Bird
-            td @twitter
+          each file, i in files
+            tr
+              - var x = file.toObject()
+              th(scope='row') #{i+1}
+              td #{file.uploadStartDate}
+              td=x.duration
+              td #{file.originalName}
+              td #{file.status}
+              td #{file.emailColumn}
+              td=(x.size/1024/1024).toFixed(3)
+              td
+                button.btn.btn-primary.btn-xs.upload-btn
+                 i(style={margin: '0'}).fa.fa-download
+                a.btn.btn-danger.btn-xs.upload-btn(href='/api/files/' + x.id + '/delete')
+                 | X

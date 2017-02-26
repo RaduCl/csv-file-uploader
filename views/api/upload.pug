@@ -12,10 +12,13 @@ block content
       | File Uploads Index
     a.btn.btn-success
       i.fa.fa-book
-      | Emit 'testing' event
+      | Emit 'testing' websocket event
 
   h3 File Upload Form
   .row
     .col-sm-12
       p All files will be uploaded to "/uploads" directory.
       #app
+
+block scripts
+  script(src='/js/upload-vue-app.js')

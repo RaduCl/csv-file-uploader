@@ -21,7 +21,7 @@ const sass = require('node-sass-middleware');
 const socket = require('socket.io');
 const multer = require('multer');
 
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+// const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -111,15 +111,13 @@ app.get('/', homeController.index);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/api/files/index', apiController.filesIndex);
+app.get('/api/files/:id/delete', apiController.deleteFileUpload);
 
 /**
  * API examples routes.
  */
-app.get('/api', apiController.getApi);
-app.get('/api/scraping', apiController.getScraping);
 app.get('/api/upload', apiController.getFileUpload);
 app.post('/api/upload', apiController.postFileUpload);
-
 /**
  * Error Handler.
  */
@@ -137,18 +135,18 @@ app.listen(app.get('port'), () => {
 /**
  * Start socket.io
  */
-var server = require('http').createServer(app);
-var io = socket(server);
-io.on('connection', function(socket){
-  console.log('SOCKET CONNECTED ID: ', socket.id);
+// var server = require('http').createServer(app);
+// var io = socket(server);
+// io.on('connection', function(socket){
+//   console.log('SOCKET CONNECTED ID: ', socket.id);
 
-  socket.on('test-event', function(data){
-    socket.emit('server-response', {soketID: socket.id})
-  });
+//   socket.on('test-event', function(data){
+//     socket.emit('server-response', {soketID: socket.id})
+//   });
 
-  socket.on('disconnect', function(){});
-});
+//   socket.on('disconnect', function(){});
+// });
 
-server.listen('4000')
+// server.listen('4000')
 
 module.exports = app;
