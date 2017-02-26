@@ -116,6 +116,7 @@ app.get('/api/files/:id/delete', apiController.deleteFileUpload);
 /**
  * API examples routes.
  */
+app.get('/api', apiController.getApi);
 app.get('/api/upload', apiController.getFileUpload);
 app.post('/api/upload', apiController.postFileUpload);
 /**
