@@ -68,7 +68,7 @@ $(document).ready(function() {
               v-model="selectedOption">
               <option
                 v-for="(option, index) in csvFileHeaders"
-                :value="index"
+                :value="index + 1"
                 >{{option}}</option>
             </select>
           </div>
@@ -82,7 +82,7 @@ $(document).ready(function() {
         invalidFileType: false,
         fileInputIsEmpty: true,
         csvFileHeaders: [],
-        selectedOption: 0,
+        selectedOption: 1,
         csvFile: '',
         uploadCompletedPercent: 0,
       }
@@ -205,7 +205,7 @@ $(document).ready(function() {
       },
 
       emailColumnWasSelected () {
-        return this.selectedOption !== 0
+        return this.selectedOption !== 1
       }
     }
   })

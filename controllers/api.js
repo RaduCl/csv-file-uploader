@@ -3,6 +3,12 @@
 const async = require('async');
 const request = require('request');
 const cheerio = require('cheerio');
+const multer = require('multer');
+const File = require('../models/File');
+const path = require('path');
+
+// const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const upload = multer({ dest: path.join(__dirname, '../uploads') });
 
 /**
  * GET /api
@@ -16,7 +22,7 @@ exports.getApi = (req, res) => {
 
 /**
  * GET /api/upload
- * File Upload API example.
+ * File Upload API.
  */
 
 exports.getFileUpload = (req, res) => {
@@ -25,10 +31,69 @@ exports.getFileUpload = (req, res) => {
   });
 };
 
-exports.postFileUpload = (req, res) => {
-  req.flash('success', { msg: 'File was uploaded successfully.' });
-  res.redirect('/api/upload');
+// exports.postFileUpload = (req, res) => {
+//   req.flash('success', { msg: 'File was uploaded successfully.' });
+//   res.redirect('/api/upload');
+// };
+
+/**
+ * POST /api/upload
+ * File Upload API.
+ */
+
+exports.postFileUpload = (req, res, next) => {
+  var uploader = upload.single('csvFile');
+
+  uploader(req, res, function (err){
+    console.log('req body: ', req.body);
+    console.log('file ', req.file);
+
+    const saveHandler = (err, newFile) => {
+      if (err)
+        return res.status(500).send('Error: ' + err);
+
+      if (newFile)
+        return res.status(200).send({status: 'File was uploaded successfully.'})
+    }
+
+    let file = new File({
+      fileName: req.file.filename,
+      originalFileName: req.file.originalname,
+      path: req.file.path,
+      uploadStartDate: req.body.uploadStartDate,
+      emailColumn: req.body.emailColumn,
+      // status: String,
+      // duration: Number,
+    });
+
+
+    if(err) {
+      console.log('error upload: ', err);
+      file.status = 'Error: ' + err
+      file.save(saveHandler)
+      // return res.status(500).send('error: some reason here...')
+    }
+
+    file.save(saveHandler)
+
+    // console.log('file ', req.file);
+    // res.status(200).send({status: 'File was uploaded successfully.'})
+  })
 };
+
+/**
+ * GET /
+ * Files index.
+ */
+
+exports.filesIndex = (req, res, next) => {
+  File.find((err, files) => {
+    res.render('api/files-index'), {
+      title: 'File Index',
+      files
+    }
+  })
+}
 
 /**
  * GET /api/scraping

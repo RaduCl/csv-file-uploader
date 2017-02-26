@@ -7,20 +7,15 @@ block content
       | File Upload
 
   .btn-group.btn-group-justified#event-emiter
+    a.btn.btn-success(href="/api/files/index")
+      i.fa.fa-laptop
+      | File Uploads Index
     a.btn.btn-success
       i.fa.fa-book
       | Emit 'testing' event
-    a.btn.btn-success
-      i.fa.fa-laptop
-      | Customize File Upload
 
   h3 File Upload Form
   .row
     .col-sm-12
       p All files will be uploaded to "/uploads" directory.
       #app
-      //- form#csvForm(role='form', enctype='multipart/form-data', method='POST')
-      //-   .form-group
-      //-     label.control-label File Input
-      //-     input#myFileInput(type='file', name='myFile')
-      //-     button.btn.btn-primary(type='submit') Submit

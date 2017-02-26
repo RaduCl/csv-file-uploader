@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  .page-header
+    h2
+      i.fa.fa-upload
+      | List of CSV File Uploads
+
+  .btn-group.btn-group-justified#event-emiter
+    a.btn.btn-success(href="/api/upload")
+      i.fa.fa-laptop
+      | Upload Files
+    a.btn.btn-success
+      i.fa.fa-book
+      | Emit 'testing' event
+
+
+  h3 Files already uploaded
+  .row
+    .col-sm-12
+      p Due to #[a(href="https://mlab.com") mongolab] hosting plan currently we are limited to 500MB file uploads
+      table.table
+        thead
+          tr
+            th #
+            th First Name
+            th Last Name
+            th Username
+        tbody
+          tr
+            th(scope='row') 1
+            td Mark
+            td Otto
+            td @mdo
+          tr
+            th(scope='row') 2
+            td Jacob
+            td Thornton
+            td @fat
+          tr
+            th(scope='row') 3
+            td Larry
+            td the Bird
+            td @twitter

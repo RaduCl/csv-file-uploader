@@ -110,6 +110,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 app.get('/', homeController.index);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
+app.get('/api/files/index', apiController.filesIndex);
 
 /**
  * API examples routes.
@@ -117,23 +118,7 @@ app.post('/contact', contactController.postContact);
 app.get('/api', apiController.getApi);
 app.get('/api/scraping', apiController.getScraping);
 app.get('/api/upload', apiController.getFileUpload);
-// app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
-app.post('/api/upload', function(req, res, next) {
-  var uploader = multer({ dest: 'uploads/' }).single('csvFile');
-
-  uploader(req, res, function (err){
-    console.log('req body: ', req.body);
-    console.log('req header: ', req.get('Content-Type'));
-
-    if(err) {
-      console.log('error upload: ', err);
-      res.status(500).send('error: some reason here...')
-    }
-
-    console.log('file ', req.file);
-    res.status(200).send({status: 'File was uploaded successfully.'})
-  })
-})
+app.post('/api/upload', apiController.postFileUpload);
 
 /**
  * Error Handler.
