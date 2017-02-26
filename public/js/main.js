@@ -32,6 +32,7 @@ $(document).ready(function() {
 
           <div class="progres-bar-container">
             <div
+              v-if="showProgresBar"
               class="alert alert-danger progres-bar-line"
               :style="{width: progresWidth}">
               {{uploadCompletedPercent}}%
@@ -78,11 +79,11 @@ $(document).ready(function() {
     data () {
       return {
         invalidFileType: false,
-        isInputEmpty: true,
+        fileInputIsEmpty: true,
         csvFileHeaders: [],
         selectedOption: 0,
         csvFile: '',
-        uploadCompletedPercent: 0
+        uploadCompletedPercent: 0,
       }
     },
 
@@ -93,6 +94,11 @@ $(document).ready(function() {
     ],
 
     methods: {
+      emailSelectHandle (e) {
+        console.log(e)
+        this.selectedOption = e.value
+      },
+
       changeHandle (e) {
         console.log('changeHandle')
 
@@ -104,7 +110,7 @@ $(document).ready(function() {
           return
         } else this.invalidFileType = false
 
-        this.isInputEmpty = false
+        this.fileInputIsEmpty = false
 
         this.csvFile = file
 
@@ -163,17 +169,24 @@ $(document).ready(function() {
     computed: {
       uploadBtnValidationStyle () {
         return this.invalidFileType
-          || this.isInputEmpty
+          || this.fileInputIsEmpty
           || this.uploadInProgress
           || this.uploadCompleted
+          || !this.emailColumnWasSelected
           ? 'disabled'
           : 'active'
       },
 
       selecBoxValidationStyle () {
-        return this.isInputEmpty
+        return this.fileInputIsEmpty
           || this.uploadInProgress
           || this.uploadCompleted
+          ? true
+          : false
+      },
+
+      showProgresBar () {
+        return this.uploadInProgress || this.uploadCompleted
           ? true
           : false
       },
@@ -192,6 +205,10 @@ $(document).ready(function() {
 
       uploadInProgress () {
         return 0 < this.uploadCompletedPercent && this.uploadCompletedPercent < 100
+      },
+
+      emailColumnWasSelected () {
+        return this.selectedOption !== 0
       }
     }
   })
