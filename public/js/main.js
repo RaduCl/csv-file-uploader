@@ -62,7 +62,8 @@ $(document).ready(function() {
           <div v-if="selectEmailBoxValues" class="form-group">
             <label for="sel1">Select Email column ({{selectedOption}}):</label>
 
-            <select class="form-control"
+            <select
+              class="form-control"
               :disabled="selecBoxValidationStyle"
               v-model="selectedOption">
               <option
@@ -94,10 +95,6 @@ $(document).ready(function() {
     ],
 
     methods: {
-      emailSelectHandle (e) {
-        console.log(e)
-        this.selectedOption = e.value
-      },
 
       changeHandle (e) {
         console.log('changeHandle')
