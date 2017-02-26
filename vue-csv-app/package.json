@@ -10,7 +10,6 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "R": "0.0.1",
     "ramda": "^0.23.0",
     "vue": "^2.1.10"
   },

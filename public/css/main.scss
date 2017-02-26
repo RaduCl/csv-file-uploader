@@ -68,3 +68,45 @@ textarea {
 .fa {
   margin-right: 6px;
 }
+
+
+// Form styles
+// 
+  .disabled {
+    pointer-events: none;
+  }
+
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .controls-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .file-input-row {
+    border-bottom: 1px solid #a0a0a0;
+    margin-bottom: 25px;
+  }
+
+  .file-input-group {
+    flex: 2;
+  }
+
+  .progres-bar-container{
+    flex: 3;
+    padding: 0;
+    margin: 12px;
+  }
+
+  .progres-bar-line {
+    margin: 0;
+    padding: 0;
+    width: 6%;
+  }
+
+  .upload-btn {
+    margin-right: 10px;
+  }

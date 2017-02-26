@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="file-input-row">
 
     <div class="form-group">
       <div class="file-input-group">
@@ -17,10 +17,11 @@
 
       <div class="controls-group">
         <button
-          class="btn btn-primary btn-xs"
+          class="btn btn-primary btn-xs upload-btn"
           :class="validationStyle"
           v-on:click="uploadFile"
           >Upload</button>
+
         <button
           class="btn btn-danger btn-xs"
           v-on:click="removeField"
@@ -33,10 +34,10 @@
         Invalid <strong>CSV</strong> file.
       </div>
 
-      <div class="form-group">
+      <div v-if="selectEmailBoxValues" class="form-group">
         <label for="sel1">Select Email column:</label>
 
-        <select class="form-control" id="sel1">
+        <select class="form-control" v-model="selectedOption">
           <option
             v-for="(option, index) in csvFileHeaders"
             :value="index"
@@ -56,7 +57,8 @@ export default {
     return {
       invalidFileType: false,
       isInputEmpty: true,
-      csvFileHeaders: []
+      csvFileHeaders: [],
+      selectedOption: 0
     }
   },
 
@@ -106,7 +108,7 @@ export default {
     },
 
     removeField (e) {
-      console.log('index', this.index)
+      console.log('removeField index', this.index)
       e.preventDefault()
       this.removeInput(this.index)
     }
@@ -121,7 +123,7 @@ export default {
 
     selectEmailBoxValues () {
       console.log('selectEmailBoxValues:', this.csvFileHeaders)
-      return this.csvFileHeaders
+      return this.csvFileHeaders.length !== 0 || false
     }
   }
 }
@@ -131,14 +133,22 @@ export default {
   .disabled {
     pointer-events: none;
   }
+
   .form-group {
     display: flex;
     justify-content: space-between;
   }
+
   .controls-group {
     display: flex;
     align-items: center;
   }
+
+  .file-input-row {
+    border-bottom: 1px solid #a0a0a0;
+    margin-bottom: 25px;
+  }
+
   .file-input-group {
     flex: 2;
   }
@@ -148,9 +158,14 @@ export default {
     padding: 0;
     margin: 12px;
   }
+
   .progres-bar-line {
     margin: 0;
     padding: 0;
     width: 6%;
+  }
+
+  .upload-btn {
+    margin-right: 10px;
   }
 </style>

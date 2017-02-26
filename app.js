@@ -119,18 +119,19 @@ app.get('/api/scraping', apiController.getScraping);
 app.get('/api/upload', apiController.getFileUpload);
 // app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
 app.post('/api/upload', function(req, res, next) {
-  var uploader = multer().single('myFile');
-  uploader(req, res, function (uploadedFilesError){
-    if(uploadedFilesError) {
-      console.log('error upload: ', uploadedFilesError);
-      req.flash('error', { msg: uploadedFilesError });
-      res.redirect('/api/upload');
+  var uploader = multer({ dest: 'uploads/' }).single('csvFile');
+
+  uploader(req, res, function (err){
+    console.log('req body: ', req.body);
+    console.log('req header: ', req.get('Content-Type'));
+
+    if(err) {
+      console.log('error upload: ', err);
+      res.status(500).send('error: some reason here...')
     }
 
-
     console.log('file ', req.file);
-    req.flash('success', { msg: 'File was uploaded successfully.' });
-    res.redirect('/api/upload');
+    res.status(200).send({status: 'File was uploaded successfully.'})
   })
 })
 
@@ -143,7 +144,7 @@ app.use(errorHandler());
  * Start Express server.
  */
 
-var server = app.listen(app.get('port'), () => {
+app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
   console.log('  Press CTRL-C to stop\n');
 });
@@ -151,8 +152,8 @@ var server = app.listen(app.get('port'), () => {
 /**
  * Start socket.io
  */
-const io = socket(server);
-
+var server = require('http').createServer(app);
+var io = socket(server);
 io.on('connection', function(socket){
   console.log('SOCKET CONNECTED ID: ', socket.id);
 
@@ -163,5 +164,6 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){});
 });
 
+server.listen('4000')
 
 module.exports = app;

@@ -14,8 +14,7 @@
       class="btn btn-info btn-block"
       v-on:click="addInput"
       >Add new file input</button>
-    <input
-      v-for="input in fileInputs" type='text'>
+
   </form>
 </template>
 
@@ -27,7 +26,8 @@ export default {
     return {
       fileInputs: [
         {id: 1}
-      ]
+      ],
+      idIndex: 1
     }
   },
 
@@ -38,7 +38,8 @@ export default {
   methods: {
     addInput () {
       console.log('addInput')
-      this.fileInputs.push({id: this.fileInputs.length + 1})
+      this.fileInputs.push({id: this.idIndex + 1})
+      this.idIndex += 1
     },
     removeInput (index) {
       console.log('removeInput index:', index)

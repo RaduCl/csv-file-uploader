@@ -16,13 +16,11 @@ block content
 
   h3 File Upload Form
   .row
-    .col-sm-6
+    .col-sm-12
       p All files will be uploaded to "/uploads" directory.
-      form#csvForm(role='form', enctype='multipart/form-data', method='POST')
-        .form-group
-          label.control-label File Input
-          input#myFileInput(type='file', name='myFile')
-          button.btn.btn-primary(type='submit') Submit
-      #app {{message}}
-        ul
-          li(v-for="input in fileInputs") {{input.id}}
+      #app
+      //- form#csvForm(role='form', enctype='multipart/form-data', method='POST')
+      //-   .form-group
+      //-     label.control-label File Input
+      //-     input#myFileInput(type='file', name='myFile')
+      //-     button.btn.btn-primary(type='submit') Submit
