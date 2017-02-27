@@ -9,7 +9,7 @@
   "author": "Radu Clitan",
   "engines": {
     "node": "6.6.0",
-    "npm": "3.10.x"
+    "npm": "3.10.3"
   },
   "license": "MIT",
   "scripts": {
