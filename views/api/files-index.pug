@@ -42,7 +42,7 @@ block content
               td #{file.emailColumn}
               td=(x.size/1024/1024).toFixed(3)
               td
-                button.btn.btn-primary.btn-xs.upload-btn
+                a.btn.btn-primary.btn-xs.upload-btn(href='/api/files/' + x.storageName + '/download', download=x.originalName)
                  i(style={margin: '0'}).fa.fa-download
                 a.btn.btn-danger.btn-xs.upload-btn(href='/api/files/' + x.id + '/delete')
                  | X

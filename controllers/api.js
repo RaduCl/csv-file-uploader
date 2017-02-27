@@ -76,6 +76,19 @@ exports.postFileUpload = (req, res, next) => {
 };
 
 /**
+ * GET /api/files/:name/download
+ * Delete file with id.
+ */
+exports.downloadFile = (req, res) => {
+  console.log('download req params:', req.params.name)
+  const fileName = req.params.name
+  var filePath = path.join(__dirname, '../uploads/', fileName)
+  console.log('file path: ', filePath)
+  res.setHeader('Content-disposition: inline');
+  res.download(filePath); // Set disposition and send it.
+}
+
+/**
  * GET /api/files/:id/delete
  * Delete file with id.
  */

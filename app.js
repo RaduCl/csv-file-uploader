@@ -112,6 +112,7 @@ app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/api/files/index', apiController.filesIndex);
 app.get('/api/files/:id/delete', apiController.deleteFileUpload);
+app.get('/api/files/:name/download', apiController.downloadFile);
 app.get('/api/files/delete', apiController.deleteAllFiles);
 
 /**
