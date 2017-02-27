@@ -10,9 +10,9 @@ block content
     a.btn.btn-success(href="/api/upload")
       i.fa.fa-laptop
       | Upload Files
-    a.btn.btn-success
+    a.btn.btn-danger(href='/api/files/delete')
       i.fa.fa-book
-      | Emit 'testing' websocket event
+      | Empty files list
 
   - console.log(files)
   h3 Files already uploaded

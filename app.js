@@ -26,7 +26,7 @@ const multer = require('multer');
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env' });
+dotenv.load({ path: '.env.example' });
 
 /**
  * Controllers (route handlers).
@@ -112,6 +112,7 @@ app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/api/files/index', apiController.filesIndex);
 app.get('/api/files/:id/delete', apiController.deleteFileUpload);
+app.get('/api/files/delete', apiController.deleteAllFiles);
 
 /**
  * API examples routes.

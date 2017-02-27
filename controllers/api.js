@@ -76,8 +76,8 @@ exports.postFileUpload = (req, res, next) => {
 };
 
 /**
- * DELETE /api/upload
- * File Upload API.
+ * GET /api/files/:id/delete
+ * Delete file with id.
  */
 exports.deleteFileUpload = (req, res) => {
   console.log('delete req params:', req.params.id)
@@ -87,17 +87,35 @@ exports.deleteFileUpload = (req, res) => {
       req.flash('error', { msg: 'Error uploading the file.' });
       res.redirect('/api/files/index');
     }
-    console.log('delete result: ', result)
 
     req.flash('success', { msg: 'Success deleting the file.' });
     res.redirect('/api/files/index');
   }
 
-  // File.find({'id': req.params.id}, deleteHandler).exec()
   File.findOneAndRemove(
     { _id : req.params.id },
     deleteHandler
   )
+}
+
+/**
+ * GET /api/files/delete
+ * Delete all files.
+ */
+exports.deleteAllFiles = (req, res) => {
+  const deleteHandler = (err, result) => {
+    if (err) {
+      req.flash('error', { msg: 'Error deleting the file.' });
+      res.redirect('/api/files/index');
+    }
+
+    req.flash('success', { msg: 'All files were deleted.' });
+    res.redirect('/api/files/index');
+  }
+
+  File.find()
+    .remove()
+    .exec(deleteHandler)
 }
 
 /**
