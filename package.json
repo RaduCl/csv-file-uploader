@@ -6,7 +6,11 @@
     "type": "git",
     "url": "https://github.com/sahat/hackathon-starter.git"
   },
-  "author": "Sahat Yalkabov",
+  "author": "Radu Clitan",
+  "engines": {
+    "node": "6.6.0",
+    "npm": "3.10.x"
+  },
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
