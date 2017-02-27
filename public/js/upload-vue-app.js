@@ -84,9 +84,10 @@ $(document).ready(function() {
         var file = e.target.files[0] || e.dataTransfer.files
 
         // do not open file if it is not a CSV
-        <!-- console.log('file: ', file) -->
-        <!-- console.log('file type: ', file.name.slice(-3)) -->
+        console.log('file: ', file)
+        console.log('file type: ', file.name.slice(-3))
         if (file.name.slice(-3) !== 'csv') {
+          console.log('csv !==', file.name.slice(-3))
           this.invalidFileType = true
           return
         } else this.invalidFileType = false
